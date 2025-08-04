@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bunny"
+version = "1.0"
+description = "A family of lightweight multimodal models."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+]
+dependencies = [
+    'accelerate==1.0.1', 'apex', 'bitsandbytes', 'datasets', 'deepspeed==0.14.0', 'einops', 'einops-exts',
+    'fastapi', 'flash_attn', 'gradio', 'gradio_client', 'httpx', 'markdown2', 'numpy', 'openpyxl',
+    'peft', 'protobuf', 'pydantic', 'pypandoc', 'requests', 'scikit-learn', 'sentencepiece', 'shortuuid',
+    'tabulate', 'timm', 'tiktoken', 'tokenizers', 'torch==2.1.2', 'torchvision==0.16.2', 'transformers==4.40.0', 'uvicorn', 'xformers',"diffusers==0.30.0"
+]
+
+
+[project.urls]
+"Homepage" = "https://github.com/BAAI-DCAI/Bunny"
+"Discussion" = "https://github.com/BAAI-DCAI/Bunny/issues"
+
+[tool.setuptools.packages.find]
+exclude = ["assets*", "benchmark*", "docs", "dist*", "playground*", "scripts*", "tests*"]
+
+[tool.wheel]
+exclude = ["assets*", "benchmark*", "docs", "dist*", "playground*", "scripts*", "tests*"]
