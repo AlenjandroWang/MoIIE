@@ -53,11 +53,57 @@ MoIIE: Mixture of Intra- and Inter-Modality Experts for Large Vision Language Mo
   ```
 ### Training
 
+MoIIE is trained on 8 A100 GPUs. Under other circumstances, you can reduce the `per_device_train_batch_size` and increase the `gradient_accumulation_steps` accordingly. Always keep the global batch size the same: `global_batch_size ` = `per_device_train_batch_size` $`\times`$ `gradient_accumulation_steps` $`\times`$ `num_gpus`.
+
+* Experiments model components
+
+
+| Vision Encoders            | Download Link                                                |
+| -------------------------- | ------------------------------------------------------------ |
+| siglip-so400m-patch14-384  | [google/siglip-so400m-patch14-384](https://huggingface.co/google/siglip-so400m-patch14-384) |
+
+
+
+| MODEL_TYPE | LLM             | Download Link                                                |
+| ---------- | --------------- | ------------------------------------------------------------ |
+| phi-3 | Phi-3-mini-4k-instruct | [microsoft/Phi-3-mini-4k-instruct](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct) |
+| llama3-8b | Meta-Llama-3-8B-Instruct | [meta-llama/Meta-Llama-3-8B-Instruct](https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct) |
+
 MoIIE training consists of two stages: 
 
-(1) pretrain stage: use data to connect a *frozen pretrained* vision encoder to a *frozen* LLM, and only the connector is trained ()
+#### Pretrain stage
 
-(2) visual instruction tuning stage&&Sparse training for all model parameters: use data to teach the model to follow multimodal instructions, where the connector, learnable LLM parameters vision encoder and MoE module are updated.
+Pretrain stage use data to connect a *frozen pretrained* vision encoder to a *frozen* LLM, and only the connector is trained 
 
-MoIIE is trained on 8 A100 GPUs. Under other circumstances, you can reduce the `per_device_train_batch_size` and increase the `gradient_accumulation_steps` accordingly. Always keep the global batch size the same: `global_batch_size ` = `per_device_train_batch_size` $`\times`$ `gradient_accumulation_steps` $`\times`$ `num_gpus`.
+Training script with DeepSpeed ZeRO-2 can be found in ```scripts/train/pretrain.sh```. Global Batch Size is 256
+
+we utilize Bunny-pretrain-LAION-2M. The dataset is available [here](https://huggingface.co/datasets/BoyaWu10/Bunny-v1_1-data).
+
+#### Visual instruction tuning stage&&Sparse training
+Visual instruction tuning stage&&Sparse training for all model parameters: use data to teach the model to follow multimodal instructions, where the connector, learnable LLM parameters vision encoder and MoE module are updated.
+
+First, execute the following command to initialize the dense LLM backbone as its corresponding sparse MoE LLM backbone. 
+
+  ```shell
+python convert_moe.py \
+        --language-model-path path/to/base_llm_model  \
+        --num_local_experts 4 \
+        --num_experts_per_tok 2 \
+        --vis_router_aux_loss_coef 0.001 \
+        --lan_router_aux_loss_coef 0.001 \
+        --output_vis_router_logits True \
+        --output_lan_router_logits True \
+        --save-model-path  /path/to/base_llm_moe_model \
+        --moe_architecture bunny-mm-phi3-moe-s
+  ```
+
+Than training script with DeepSpeed ZeRO-3 can be found in ```scripts/train/finetune_all_moe.sh```. Global Batch Size is 128
+
+we utilize [MGM-Intruct]([YanweiLi/MGM-Instruction](https://huggingface.co/datasets/YanweiLi/MGM-Instruction)) ,[Bunnyv1_1](https://huggingface.co/datasets/BoyaWu10/Bunny-v1_1-data), [LLaVA-Next](lmms-lab/LLaVA-NeXT-Data) and [LLaVA-OV](https://github.com/LLaVA-VL/LLaVA-NeXT) data for experiments.
+
+* Run
+
+  Update `--model_name_or_path` and `--vision_tower` to the paths of the base_llm_moe_model and vision encoder, respectively. Update `MODEL_TYPE`, `PRETRAIN_DIR` and `OUTPUT_DIR` accordingly. The global batch size is 128. For `MODEL_TYPE = minicpm/phi-3/llama3-8b`, change `--version` to `minicpm/phi3/llama`, too. S$`^2`$-Wrapper would be enabled if `--use_s2 True` added. The vision encoder would be tuned if `--unfreeze_vision_tower True` added. If only want to tune MoE layer `--moe_enable  True` added.
+
+
 
