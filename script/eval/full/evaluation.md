@@ -34,6 +34,13 @@ The response file can be found in `eval/mmbench/answers_upload`. You can submit 
    python eval/seed-bench/extract_video_frames.py
    ```
 
+### TextVQA
+
+1. Download [images](https://dl.fbaipublicfiles.com/textvqa/images/train_val_images.zip) and extract to `./eval/textvqa`.
+2. Single-GPU inference and evaluate.
+```Shell
+CUDA_VISIBLE_DEVICES=0 bash scripts/v1_5/eval/textvqa.sh
+```
 
 2. Update `MODEL_TYPE` and `TARGET_DIR` accordingly.
 
@@ -146,3 +153,18 @@ CUDA_VISIBLE_DEVICES=0 sh script/eval/full/mmvet.sh
 
 The response file can be found in `eval/mm-vet/answers_upload`. You can submit the `json` response file to [submission link](https://huggingface.co/spaces/whyu/MM-Vet_Evaluator) to obtain the evaluation scores.
 
+## More Benchmarks
+Below more benchmarks implement it by referring to Cambrian’s evaluation script. include AI2D, Chartqa, DocVQA, HallusionBench
+## Usage
+
+To run evaluations, use the [`run_benchmark.sh`](scripts/eval.sh) script in the [`scripts/`](scripts/) directory. Here's the basic usage:
+
+```bash
+bash scripts/run.sh --benchmark <benchmark_name> --ckpt <path_to_checkpoint> --conv_mode <conversation_mode> --model_type <model_type>
+```
+For example:
+
+```bash
+bash scripts/eval.sh --benchmark ai2d --ckpt /path/to/checkpoint --conv_mode phi3 --model_type mms-phi-3-moe
+```
+Specificly the benchmark Mathvista please refer [VlmEvalKit](https://github.com/open-compass/VLMEvalKit)
