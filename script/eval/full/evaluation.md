@@ -157,10 +157,10 @@ The response file can be found in `eval/mm-vet/answers_upload`. You can submit t
 Below more benchmarks implement it by referring to Cambrian’s evaluation script. include AI2D, Chartqa, DocVQA, HallusionBench
 ## Usage
 
-To run evaluations, use the [`run_benchmark.sh`](scripts/eval.sh) script in the [`scripts/`](scripts/) directory. Here's the basic usage:
+To run evaluations, use the [`eval.sh`](scripts/eval.sh) script in the [`scripts/`](scripts/) directory. Here's the basic usage:
 
 ```bash
-bash scripts/run.sh --benchmark <benchmark_name> --ckpt <path_to_checkpoint> --conv_mode <conversation_mode> --model_type <model_type>
+bash scripts/eval.sh --benchmark <benchmark_name> --ckpt <path_to_checkpoint> --conv_mode <conversation_mode> --model_type <model_type>
 ```
 For example:
 
