@@ -1,6 +1,7 @@
 # MoIIE: Mixture of Intra- and Inter-Modality Experts for Large Vision Language Models
 
-
+![](case.png)
+![](MoIIE.png)
 
 ## Release
 - [2025/08/01] 🔥 We have released **training and evaluation codes**. 
