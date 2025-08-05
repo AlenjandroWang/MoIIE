@@ -107,7 +107,7 @@ we utilize [MGM-Intruct]([YanweiLi/MGM-Instruction](https://huggingface.co/datas
 
 * Run
 
-  Update `--model_name_or_path` and `--vision_tower` to the paths of the base_llm_moe_model and vision encoder, respectively. Update `MODEL_TYPE`, `PRETRAIN_DIR` and `OUTPUT_DIR` accordingly. The global batch size is 128. For `MODEL_TYPE = `MODEL_TYPE = mms-phi-3-moe(MoIIE)/phi-3-moe(Vanilla MoE)/m-phi-3(Modality MoE)/phi-3(Dense)`, change `--version` to `minicpm/phi3/llama`, too. S$`^2`$-Wrapper would be enabled if `--use_s2 True` added. The vision encoder would be tuned if `--unfreeze_vision_tower True` added. If only want to tune MoE layer `--moe_enable  True` added.
+  Update `--model_name_or_path` and `--vision_tower` to the paths of the base_llm_moe_model and vision encoder, respectively. Update `MODEL_TYPE`, `PRETRAIN_DIR` and `OUTPUT_DIR` accordingly. The global batch size is 128. For `MODEL_TYPE = mms-phi-3-moe(MoIIE)/phi-3-moe(Vanilla MoE)/m-phi-3(Modality MoE)/phi-3(Dense)`, change `--version` to `minicpm/phi3/llama`, too. S$`^2`$-Wrapper would be enabled if `--use_s2 True` added. The vision encoder would be tuned if `--unfreeze_vision_tower True` added. If only want to tune MoE layer `--moe_enable  True` added.
 
 
 ## Evaluation
