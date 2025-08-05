@@ -1,6 +1,9 @@
-# MoIIE
-MoIIE: Mixture of Intra- and Inter-Modality Experts for Large Vision Language Models
+# MoIIE MoIIE: Mixture of Intra- and Inter-Modality Experts for Large Vision Language Models
 
+
+
+## Release
+- [2025/08/01] 🔥 We have released **training and evaluation codes**. 
 
 ## Contents
 - [Install](#install)
@@ -111,4 +114,9 @@ we utilize [MGM-Intruct]([YanweiLi/MGM-Instruction](https://huggingface.co/datas
 see [evaluation_full.md](script/eval/full/evaluation.md).
 
 
-
+## Acknowledgement
+- [LLaVA](https://github.com/haotian-liu/LLaVA): the dataset we utilized.
+- [Bunny](https://github.com/BAAI-DCAI/Bunny): the codebase we built upon and the dataset we utilized.
+- [LLaVA-Next](https://github.com/LLaVA-VL/LLaVA-NeXT): the dataset we utilized.
+- [MGM](https://github.com/dvlab-research/MGM) the dataset we utilized.
+- [Cambrian-1](https://github.com/cambrian-mllm/cambrian): the evaluation codebase we utilized.
