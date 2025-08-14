@@ -12,7 +12,8 @@ Our MoIIE progressively improves while other architectures, especially Dense and
 Moreover, with larger training datasets, our MoIIE consistently outperforms all alternatives, with the performance gap widening between MoIIE and both Dense and Modality MoE. This suggests that the MoIIE framework offers superior scaling properties for multi-modal learning, effectively leveraging larger datasets to enhance representation power without the parameter inefficiency of dense models or the limited cross-modal reasoning of strictly modality-separated experts. 
 
 ## Release
-- [2025/08/01] 🔥 We have released **training and evaluation codes**. 
+- [2025/08/01] 🔥 We have released **training and evaluation codes**.
+- [2025/08/13] 🔥 We have released **MoIIE**. Checkout the [paper](https://arxiv.org/abs/2508.09779) for details.
 
 ## Contents
 - [Install](#install)
